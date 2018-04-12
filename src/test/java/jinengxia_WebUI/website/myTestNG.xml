@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="技能侠官网">
+	<parameter name="websiteURL" value="http://dev.jinengxia.com"></parameter>
+	<test name="用户操作测试">
+		<classes>
+			<class name="jinengxia_WebUI.website.loginTest">
+				<methods>
+					<include name="login">登录官网</include>
+					<include name="loginOut">退出登录</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="订单购买">
+		<classes>
+			<class name="jinengxia_WebUI.website.orderTest">
+				<methods>
+					<include name="buy_aplipay">下订单,用支付宝支付</include>
+				</methods>
+			</class>
+
+		</classes>
+	</test>
+</suite>
