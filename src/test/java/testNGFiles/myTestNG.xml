@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="技能侠主要业务流测试">
+	<test name="前台业务">
+		<classes>
+			<class name="jinengxia_WebUI.websiteTest.orderTest"/>
+		</classes>
+	</test>
+</suite>

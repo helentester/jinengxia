@@ -38,15 +38,4 @@ public class BasePage {
 		return element;
 	}
 	
-	/*切换窗口操作*/
-	public void changeWindow(WebDriver driver) {
-		//获取当前窗口的句柄
-		String handle = driver.getWindowHandle();
-		// 获取所有页面的句柄，并循环判断不是当前的句柄
-		for (String handles : driver.getWindowHandles()) {
-			if (handles.equals(handle))
-				continue;
-			driver.switchTo().window(handles);
-		}
-	}
 }

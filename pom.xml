@@ -15,7 +15,14 @@
 	</properties>
 
 	<dependencies>
-		<!-- 加入 JSONObject依赖包，支持json数据处理-->
+		<!-- 加入mysql支持 -->
+		<!-- https://mvnrepository.com/artifact/mysql/mysql-connector-java -->
+		<dependency>
+			<groupId>mysql</groupId>
+			<artifactId>mysql-connector-java</artifactId>
+			<version>6.0.6</version>
+		</dependency>
+		<!-- 加入 JSONObject依赖包，支持json数据处理 -->
 		<dependency>
 			<groupId>com.alibaba</groupId>
 			<artifactId>fastjson</artifactId>
@@ -33,20 +40,25 @@
 			<artifactId>testng</artifactId>
 			<version>6.14.2</version>
 			<scope>test</scope>
-		</dependency>
-		<!-- 添加reportNG依赖,生成html报告 -->
+		</dependency><!-- 加入reportNG依赖，代替testNG测试报告。这个reportng已经过本人的修改，报告中会输出@Test的description属性 -->
 		<dependency>
 			<groupId>org.uncommons</groupId>
 			<artifactId>reportng</artifactId>
-			<version>1.1.4</version>
-			<scope>test</scope>
+			<version>1.1.6</version>
+			<scope>system</scope>
+			<systemPath>${basedir}/lib/reportng-1.1.6.jar</systemPath>
 			<exclusions>
-				<!-- 关联testNG -->
 				<exclusion>
 					<groupId>org.testng</groupId>
 					<artifactId>testng</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+		<!-- 因为依赖的是本地自己打包的reportng所以还要把它的依赖包velocity引入 -->
+		<dependency>
+			<groupId>velocity</groupId>
+			<artifactId>velocity</artifactId>
+			<version>1.4</version>
 		</dependency>
 		<!-- 依赖guice -->
 		<dependency>
@@ -63,7 +75,10 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<suiteXmlFiles>
-						<suiteXmlFile>src/test/java/jinengxia_WebUI/website/myTestNG.xml</suiteXmlFile>
+						<!-- 主要业务流测试 -->
+						<suiteXmlFile>src/test/java/testNGFiles/myTestNG.xml</suiteXmlFile>
+						<!-- 普通功能单元测试 -->
+						<suiteXmlFile>src/test/java/testNGFiles/UnitCaseTestNG.xml</suiteXmlFile>
 					</suiteXmlFiles>
 					<argLine>-Dfile.encoding=UTF-8</argLine>
 					<workingDirectory>target/</workingDirectory>

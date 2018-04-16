@@ -2,7 +2,7 @@
  * @author Helen 
  * @date 2018年4月10日  
  */
-package jinengxia_WebUI.website;
+package jinengxia_WebUI.websiteTest;
 
 import static org.testng.Assert.assertEquals;
 
@@ -11,6 +11,8 @@ import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
+import common.BaseWindows;
+import common.mysql_conn;
 import jinengxia_WebUI.website_pages.course_page;
 import jinengxia_WebUI.website_pages.index_page;
 import jinengxia_WebUI.website_pages.orderAplipay_page;
@@ -22,9 +24,8 @@ import jinengxia_WebUI.website_pages.orderPay_page;
  */
 public class orderTest {
 
-	@Test
-	@Parameters({ "websiteURL" })
-	public void buy_aplipay(String websiteURL) {
+	@Test(description="官网下订单操作")
+	public void buy_aplipay() {
 		loginTest loginTest = new loginTest();
 		WebDriver driver= loginTest.get_driver();
 		//官网首页
@@ -32,7 +33,8 @@ public class orderTest {
 		index_page.click_courseLink();// 点击课程链接按钮
 		//课程详情页面
 		course_page course_page = PageFactory.initElements(driver, course_page.class);
-		course_page.changeWindow(driver);// 因为详情页面是另起标签页打开，所以要切换窗口
+		BaseWindows windows = new BaseWindows();
+		windows.changeWindow(driver);// 因为详情页面是另起标签页打开，所以要切换窗口
 		course_page.click_buyBTN();// 点击立即购买按钮
 		//下订单页面
 		orderDetail_page orderDetail_page = PageFactory.initElements(driver, orderDetail_page.class);
@@ -49,7 +51,10 @@ public class orderTest {
 		orderAplipay_page orderAplipay_page = PageFactory.initElements(driver, orderAplipay_page.class);
 		assertEquals("在线购买技能班: "+orderNB, orderAplipay_page.get_orderNB());//判断订单号是否正确
 		assertEquals("收款方：广州邢帅教育科技有限公司", orderAplipay_page.get_paree());//判断付款方是否正确
-		//待开发从数据库中取值验证：订单金额是否正确
+		//从数据库中取值验证：订单金额是否正确
+		mysql_conn mysql_conn = new mysql_conn();
+		String amount = mysql_conn.getData("SELECT payment_amount from `order` where order_no='"+orderNB+"';", "payment_amount");
+		assertEquals(amount, orderAplipay_page.get_money());
 		driver.quit();
 	}
 }
