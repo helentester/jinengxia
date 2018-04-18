@@ -5,9 +5,12 @@
  */
 package common;
 
+import java.util.List;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class BasePage {
@@ -38,4 +41,9 @@ public class BasePage {
 		return element;
 	}
 	
+	/*select下拉框选择*/
+	public void selectValue(WebElement element,String valueName) {
+		new Select(this.findMyElement(element)).selectByValue(valueName);	
+	}
+
 }

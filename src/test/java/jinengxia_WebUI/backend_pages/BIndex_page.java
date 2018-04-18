@@ -20,10 +20,16 @@ public class BIndex_page extends BasePage{
 		// TODO Auto-generated constructor stub
 	}
 	
-	@FindBy(tagName="h1")
+	@FindBy(className="clearfix")
 	private WebElement h1;//页头内容
 	public String get_h1Text() {
 		return this.findMyElement(h1).getText();//获取页头内容
+	}
+	
+	@FindBy(linkText="技能班管理")
+	private WebElement courseManager;//技能班管理链接
+	public void click_CourseManager() {
+		this.click(courseManager);
 	}
 	
 

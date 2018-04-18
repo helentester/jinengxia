@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
+<suite name="功能模块单元测试">
+	<parameter name="websiteURL" value="http://dev.jinengxia.com"></parameter>
+	<test name="前台单元测试">
+		<classes>
+			<class name="jinengxia_WebUI.websiteTest.loginTest">
+				<methods>
+					<include name="login">登录官网</include>
+					<include name="loginOut">退出登录</include>
+				</methods>
+			</class>
+		</classes>
+	</test>
+	<test name="后台单元测试">
+		<classes>
+			<class name="jinengxia_WebUI.backendTest.BLoginTest"></class>
+		</classes>
+	</test>
+</suite>

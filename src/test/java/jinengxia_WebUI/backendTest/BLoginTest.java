@@ -17,7 +17,7 @@ import jinengxia_WebUI.backend_pages.BLogin_page;
  */
 public class BLoginTest {
 	
-	private WebDriver login() {
+	public WebDriver login() {
 		BaseWindows windows = new BaseWindows();
 		WebDriver driver = windows.get_driver("https://backend.dev.jinengxia.com");
 		BLogin_page bLogin_page = PageFactory.initElements(driver, BLogin_page.class);
@@ -25,7 +25,7 @@ public class BLoginTest {
 		bLogin_page.sendkeys_password("xsteach");
 		bLogin_page.click_loginBTN();
 		BIndex_page index_page = PageFactory.initElements(driver, BIndex_page.class);
-		assertEquals(index_page.get_h1Text(), "技能侠教务工作平台");
+		assertEquals(index_page.get_h1Text(), "当前是首页，之后会有统计图表");
 		return driver;
 	}
 
