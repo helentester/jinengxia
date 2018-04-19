@@ -42,8 +42,16 @@ public class BasePage {
 	}
 	
 	/*select下拉框选择*/
-	public void selectValue(WebElement element,String valueName) {
-		new Select(this.findMyElement(element)).selectByValue(valueName);	
+	public void selectValue(WebElement element,String s,String byType) {
+		if(byType.equals("ByVisibleText")) {
+			new Select(this.findMyElement(element)).selectByVisibleText(s);	
+		}
+		else if (byType.equals("ByValue")) {
+			new Select(this.findMyElement(element)).selectByValue(s);	
+		}
+		else if (byType.equals("ByIndex")) {
+			new Select(this.findMyElement(element)).selectByIndex(Integer.parseInt(s));	
+		}	
 	}
 
 }

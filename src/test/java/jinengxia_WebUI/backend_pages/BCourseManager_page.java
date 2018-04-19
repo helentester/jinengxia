@@ -67,7 +67,7 @@ public class BCourseManager_page extends BasePage{
 	@FindBy(id="courseform-stage")
 	private WebElement courseStage;//阶段数
 	public void select_courseStage(String s) {
-		this.selectValue(courseStage, "2");
+		this.selectValue(courseStage, "2","ByValue");
 	}
 	
 	@FindBy(className="btn-success")
@@ -90,13 +90,13 @@ public class BCourseManager_page extends BasePage{
 	}
 	
 	/***********技能班的老师编辑页面***************/
-	@FindBy(tagName="input")
+	@FindBy(className="select2-search__field")
 	private WebElement inputTeacherName;//老师名称输入框
 	public void sendkeys_inputTeacherName(String s) {
 		this.sendkeys(inputTeacherName, s);
 	}
 	
-	@FindBy(tagName=".//*[@id='w0']/div[1]/div/span[2]/span[1]/span/ul/li[1]")
+	@FindBy(xpath=".//*[@id='select2-coursehasteacherform-teacher_id-results']/li[1]")//这里被坑了，li的后面记得加下标
 	private WebElement selectTeachName;//查询到的第一个老师
 	public void click_selectTeachName() {
 		this.click(selectTeachName);//选择
@@ -143,12 +143,77 @@ public class BCourseManager_page extends BasePage{
 	@FindBy(id="coursescoreform-stars")
 	private WebElement scoreStars;//星数
 	public void select_scoreStars(String s) {
-		this.selectValue(scoreStars, s);
+		this.selectValue(scoreStars, s,"ByValue");
 	}
 	
 	@FindBy(id="coursescoreform-score")
 	private WebElement score;//分数
 	public void sendkeys_score(String s) {
 		this.sendkeys(score, s);
+	}
+	
+	/************班期列表页面***************/
+	@FindBy(linkText="添加班期")
+	private WebElement addScheduleBTN;//添加班期按钮
+	public void click_addScheduleBTN() {
+		this.click(addScheduleBTN);
+	}
+	
+	@FindBy(xpath=".//*[@id='w0']/table/tbody/tr/td[6]/a[2]")
+	private WebElement stageLink;//阶段管理链接
+	public void click_stageLink() {
+		this.click(stageLink);
+	}
+	
+	/************阶段管理列表页面******************/
+	@FindBy(linkText="添加阶段")
+	private WebElement addStageBTN;//添加阶段按钮
+	public void click_addStageBTN() {
+		this.click(addStageBTN);
+	}
+	
+	@FindBy(id="coursestageform-course_schedule_id")
+	private WebElement scheduleAtStageList;//查询条件：班期
+	public void select_scheduleAtStageList(int selectIndex) {
+		this.selectValue(scheduleAtStageList, Integer.toString(selectIndex), "ByIndex");
+	}
+	
+	@FindBy(className="btn-search")
+	private WebElement searchBTN;//查询按钮
+	public void click_searchBTN() {
+		this.click(searchBTN);
+	}
+	
+	/************阶段编辑页面**********************/
+	@FindBy(id="coursestageform-start_time")
+	private WebElement stageStart;//阶段开始时间
+	public void sendkeys_stageStart(String s) {
+		this.sendkeys(stageStart, s);
+	}
+	
+	@FindBy(id="coursestageform-end_time")
+	private WebElement stageEnd;//阶段结束时间
+	public void sendkeys_stageEnd(String s) {
+		this.sendkeys(stageEnd, s);
+	}
+	
+	/*****************学员管理列表页面*****************/
+	@FindBy(linkText="添加学员")
+	private WebElement addStudentBTN;//添加学员按钮
+	public void click_addStudentBTN() {
+		this.click(addStudentBTN);
+	}
+	
+	/*************添加学员页面*************/
+	@FindBy(id="courseschedulehasstudentform-student_id")
+	private WebElement studentID;//学员ID输入框
+	public void sendkeys_studentID(String s) {
+		this.sendkeys(studentID, s);
+	}
+	
+	@FindBy(id="courseschedulehasstudentform-course_schedule_id")
+	private WebElement scheduleAtStudent;//班期选择
+	public void select_scheduleAtStudent(String s) {
+		this.selectValue(scheduleAtStudent, s, "ByIndex");
 	}
 }

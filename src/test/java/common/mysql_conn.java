@@ -21,6 +21,7 @@ public class mysql_conn {
 	private PreparedStatement pst = null;
 	private ResultSet resultSet = null;
 
+	/*
 	public mysql_conn() {
 		try {
 			conn = DriverManager.getConnection(url, user, password);
@@ -29,13 +30,24 @@ public class mysql_conn {
 			e.printStackTrace();
 		}
 
+	}*/
+	
+	/*链接数据库*/
+	public void My_conn() {
+		try {
+			conn = DriverManager.getConnection(url, user, password);
+		} catch (Exception e) {
+			System.out.println("数据库连接失败！");
+			e.printStackTrace();
+		}
 	}
 
 	/* 执行SQL语句:查询并返回结果, 这是单结果返回，我们测试的时候就是根据条件查询，然后返回一个结果与期望结果比较即可，所以单结果足已*/
 	public String getData(String sql, String targetName) {
 		String result = null;
 		try {
-
+			this.My_conn();//链接数据库
+			Thread.sleep(1000);//需要等待数据生成
 			pst = conn.prepareStatement(sql);
 			resultSet = pst.executeQuery();
 			while (resultSet.next()) {
