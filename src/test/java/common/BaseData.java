@@ -11,19 +11,22 @@ import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
+import java.io.*;
+
 import java.util.regex.Matcher;
 
 /**
  * 描述：一些数据处理函数
  */
 public class BaseData {
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
 		BaseData baseData = new BaseData();
 		//System.out.println(baseData.getRandomName("技能班")); 
 		//System.out.println(baseData.getTargetList("https://backend.dev.jinengxia.com/course/course-teacher-list?course_id=39", "\\d+").get(0));
-		for (int h = 0; h < 3; h++) {
-			System.out.println("开始时间："+baseData.getTimeByMonthsAndDays(h,1)+",结束时间"+baseData.getTimeByMonthsAndDays(h+1,0)); 
-		}
+//		for (int h = 0; h < 3; h++) {
+//			System.out.println("开始时间："+baseData.getTimeByMonthsAndDays(h,1)+",结束时间"+baseData.getTimeByMonthsAndDays(h+1,0)); 
+//		}
+		System.out.println(baseData.getFilePath("data/classList.xlsx")); 
 	}
 
 	/*返回参数与随机数并接成新的值*/
@@ -50,5 +53,12 @@ public class BaseData {
 		calendar.add(calendar.DAY_OF_MONTH, day2);
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(calendar.getTime());
+	}
+	
+	/*根据相对路径获取文件的绝对路径*/
+	public String getFilePath(String path) throws IOException {
+		File file = new File(path);
+		//System.out.println(file.getPath());//相对路径
+		return file.getCanonicalPath();
 	}
 }

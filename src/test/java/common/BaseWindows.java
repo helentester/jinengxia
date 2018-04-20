@@ -11,10 +11,10 @@ import org.openqa.selenium.firefox.FirefoxDriver;
  * 描述：窗口操作
  */
 public class BaseWindows {
-	WebDriver driver = new FirefoxDriver();
-
+	
 	/* 获取driver驱动 */
 	public WebDriver get_driver(String url) {
+		WebDriver driver = new FirefoxDriver();
 		driver.get(url);
 		driver.manage().window().maximize();
 		return driver;

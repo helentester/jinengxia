@@ -10,6 +10,7 @@ import static org.testng.Assert.assertTrue;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 import common.BaseData;
@@ -20,6 +21,7 @@ import jinengxia_WebUI.backend_pages.BIndex_page;
 /**
  * 描述：后台技能班管理测试
  */
+@Test(groups="BCourseManagerTest")
 public class BCourseManagerTest {
 	WebDriver driver;
 	BaseData bdata = new BaseData();
@@ -34,8 +36,13 @@ public class BCourseManagerTest {
 		index_page = PageFactory.initElements(driver, BIndex_page.class);
 		courseManager_page = PageFactory.initElements(driver, BCourseManager_page.class);
 	}
+	
+	@AfterClass
+	public void closeBrowser() {
+		driver.quit();
+	}
 
-	@Test(description = "新增技能班",enabled=false)
+	@Test(description = "新增技能班")
 	public void addCourse() {
 		// 首页
 		index_page.click_CourseManager();// 点击技能班管理链接
@@ -49,7 +56,7 @@ public class BCourseManagerTest {
 		assertEquals(courseManager_page.get_courseNameAtList(), courseName);
 	}
 
-	@Test(description = "给技能班添加老师", dependsOnMethods = "addCourse", enabled = false)
+	@Test(description = "给技能班添加老师", dependsOnMethods = "addCourse")
 	public void addTeacher() throws InterruptedException {
 		// 技能班列表页面
 		index_page.click_CourseManager();
@@ -64,7 +71,7 @@ public class BCourseManagerTest {
 		assertEquals(courseManager_page.get_teachNameAtCourse(), "helen老师");
 	}
 
-	@Test(description = "给技能班设置评分维度", dependsOnMethods = "addCourse", enabled = false)
+	@Test(description = "给技能班设置评分维度", dependsOnMethods = "addCourse")
 	public void addCourseScore() {
 		// 技能班列表页面
 		index_page.click_CourseManager();
@@ -96,7 +103,7 @@ public class BCourseManagerTest {
 		assertEquals(passScore, "66");// 从数据库中读取已保存在技能班中的通关分值来判断是否设置成功
 	}
 
-	@Test(description = "给技能班设置班期",dependsOnMethods = "addCourse", enabled = false)
+	@Test(description = "给技能班设置班期",dependsOnMethods="addCourse")
 	public void addSchedule() throws InterruptedException {
 		// 技能班列表页面
 		index_page.click_CourseManager();
@@ -129,9 +136,25 @@ public class BCourseManagerTest {
 		
 	}
 	
-	@Test(description="给技能班添加学员")
+	@Test(description="给技能班添加学员",dependsOnMethods="addCourse")
 	public void addStudents() {
-		
+		index_page.click_CourseManager();//进入技能班管理页面
+		courseManager_page.click_studentListLink();//点击学员管理列表
+		//学员列表页面
+		courseManager_page.click_addStudentBTN();//点击添加学员按钮
+		courseManager_page.sendkeys_studentID("9938924\n" + 
+				"9938894\n" + 
+				"9938895\n" + 
+				"9938896\n"+
+				"9938897\n"+
+				"9938898\n"+
+				"9938899\n"+
+				"9938900");//输入学员ID列表
+		courseManager_page.select_scheduleAtStudent("1");//选择班期
+		courseManager_page.click_SubmitBTN();//保存
+		String course_id = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
+		String studentCount = mConn.getData("SELECT COUNT(*) as studentCount FROM course_schedule_has_student WHERE course_id="+course_id, "studentCount");
+		assertTrue(Integer.parseInt(studentCount)==8);
 	}
 	
 	/*添加阶段*/

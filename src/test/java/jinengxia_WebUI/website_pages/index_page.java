@@ -6,6 +6,7 @@ package jinengxia_WebUI.website_pages;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
 import common.BasePage;
@@ -37,6 +38,14 @@ public class index_page extends BasePage {
 	public void click_myImg() {
 		this.click(myImg);//点击用户头像
 	}
+	
+	@FindBy(linkText="教务工作台")
+	private WebElement teacherSYSLink;//教务工作台链接
+	public void click_teacherSYSLink(WebDriver driver) {
+		Actions actions = new Actions(driver);
+		actions.moveToElement(this.get_myImg()).perform();
+		this.click(teacherSYSLink);
+	}
 
 	@FindBy(linkText = "查看课程详情")
 	private WebElement courseLink;// 课程详情链接
@@ -46,7 +55,9 @@ public class index_page extends BasePage {
 
 	@FindBy(linkText = "退出")
 	private WebElement loginOut;// 退出按钮
-	public void click_loginOut() {
+	public void click_loginOut(WebDriver driver) {
+		Actions actions = new Actions(driver);
+		actions.moveToElement(this.get_myImg()).perform();
 		this.click(loginOut);// 点击退出按钮
 	}
 

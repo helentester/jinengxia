@@ -4,6 +4,8 @@
  */
 package jinengxia_WebUI.backend_pages;
 
+import java.sql.Time;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -53,7 +55,7 @@ public class BCourseManager_page extends BasePage{
 	
 	@FindBy(xpath=".//*[@id='w0']/table/tbody/tr[1]/td[4]/a[4]")
 	private WebElement studentListLink;//列表第一个技能班的：学员管理
-	public void click_() {
+	public void click_studentListLink() {
 		this.click(studentListLink);
 	}
 	
@@ -202,6 +204,12 @@ public class BCourseManager_page extends BasePage{
 	private WebElement addStudentBTN;//添加学员按钮
 	public void click_addStudentBTN() {
 		this.click(addStudentBTN);
+	}
+	
+	@FindBy(xpath=".//*[@id='w0']/table/tbody/tr[1]/td[4]")
+	private WebElement studentSchedule;//列表第一行的班期名称
+	public String get_studentSchedule() {
+		return this.findMyElement(studentSchedule).getText();
 	}
 	
 	/*************添加学员页面*************/
