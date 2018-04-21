@@ -6,6 +6,11 @@
 			<class name="jinengxia_WebUI.websiteTest.orderTest" />
 		</classes>
 	</test>
+	<test name="教师工作台">
+		<classes>
+			<class name="jinengxia_WebUI.websiteTest.TClassManagerTest"></class>
+		</classes>
+	</test>
 	<test name="后台管理系统">
 		<classes>
 			<class name="jinengxia_WebUI.backendTest.BCourseManagerTest"></class>

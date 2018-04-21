@@ -86,6 +86,12 @@ public class TClass_page extends BasePage{
 		}
 	}
 	
+	@FindBy(name="id_or_name")
+	private WebElement searchWords;//查询关键词：课时ID或课时名称
+	public void sendkeys_searchWords(String s) {
+		this.sendkeys(searchWords, s);
+	}
+	
 	@FindBy(className="btn-success-not")
 	private WebElement searchBTN;//查询按钮
 	public void click_searchBTN() {
@@ -99,11 +105,10 @@ public class TClass_page extends BasePage{
 	}
 	
 	/***************内容管理页面*****************/
-	@FindBy(xpath=".//*[@id='jnx-editor-video']/p")
+	@FindBy(xpath=".//*[@id='jnx-editor-video']")
 	private WebElement editor;//导读内容
-	public void sendkeys_editor(WebDriver driver,String js) {
-		String jString = "arguments[0].innerHTML = '<table><tbody><tr ><td >日期</td><td >修订说明</td><td >修改人</td></tr><tr><td >2018-03-05</td><td >初稿</td><td >刘大为</td></tr><tr><td >2018-03-05</td><td >初稿</td><td >刘大为</td></tr></tbody></table>\n"
-				+ "<img _src=\'https://f.cdn.jinengxia.cn/attachment/cc/b7/e1/ccb7e1d51808ee6433cb0b24e5515f43376.jpeg\' src=\'https://f.cdn.jinengxia.cn/attachment/cc/b7/e1/ccb7e1d51808ee6433cb0b24e5515f43376.jpeg\'>'";
+	public void sendkeys_editor(WebDriver driver,String h1) {
+		String jString = "arguments[0].innerHTML = '<h1>"+h1+"</h1><br><table width=\"560\" border=\"1\"><tbody><tr ><td >日期</td><td >修订说明</td><td >修改人</td></tr><tr><td >2018-03-05</td><td >初稿</td><td >刘大为</td></tr><tr><td >2018-03-05</td><td >完成版交付</td><td >大为刘</td></tr></tbody></table><br>'";
 		this.JS(driver, editor, jString);//通过JS插入
 	    //jsExecutor.executeScript("arguments[0].innerHTML = '<h1>Selenium Test </h1>I love Selenium <br> this article Post By Selenium WebDriver<br><h2>Create By Young</h2>'", myElement);
 	}
@@ -118,5 +123,11 @@ public class TClass_page extends BasePage{
 	private WebElement submitBTN;//保存按钮
 	public void click_submitBTN() {
 		this.click(submitBTN);
+	}
+	
+	@FindBy(id="jnx-period_video_url")
+	private WebElement videoURL;//视频链接
+	public void sendkeys_videoURL(String s) {
+		this.sendkeys(videoURL, s);
 	}
 }

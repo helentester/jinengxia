@@ -8,7 +8,6 @@ import static org.testng.Assert.assertEquals;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
-import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import common.BaseWindows;
@@ -53,7 +52,7 @@ public class orderTest {
 		assertEquals("收款方：广州邢帅教育科技有限公司", orderAplipay_page.get_paree());//判断付款方是否正确
 		//从数据库中取值验证：订单金额是否正确
 		mysql_conn mysql_conn = new mysql_conn();
-		String amount = mysql_conn.getData("SELECT payment_amount from `order` where order_no='"+orderNB+"';", "payment_amount");
+		String amount = mysql_conn.getData("SELECT payment_amount from `order` where order_no='"+orderNB+"';", "payment_amount").get(0);
 		assertEquals(amount, orderAplipay_page.get_money());
 		driver.quit();
 	}

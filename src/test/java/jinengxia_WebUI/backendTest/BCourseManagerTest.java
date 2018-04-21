@@ -8,7 +8,6 @@ import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
@@ -99,7 +98,7 @@ public class BCourseManagerTest {
 		courseManager_page.sendKeys_passScore("66");// 通关分值
 		courseManager_page.click_passScoreBTN();// 点击“设置通关分值”按钮
 		String courseId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);// 通过正则，从URL获取当前技能班的id
-		String passScore = mConn.getData("SELECT pass_score from course where id=" + courseId, "pass_score");
+		String passScore = mConn.getData("SELECT pass_score from course where id=" + courseId, "pass_score").get(0);
 		assertEquals(passScore, "66");// 从数据库中读取已保存在技能班中的通关分值来判断是否设置成功
 	}
 
@@ -115,7 +114,7 @@ public class BCourseManagerTest {
 			courseManager_page.click_SubmitBTN();//所有采用默认值，直接保存即可
 		}
 		String courseId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前技能班id
-		String ScheduleCount = mConn.getData("SELECT COUNT(*)as ScheduleCount FROM course_schedule WHERE course_id="+courseId, "ScheduleCount");
+		String ScheduleCount = mConn.getData("SELECT COUNT(*)as ScheduleCount FROM course_schedule WHERE course_id="+courseId, "ScheduleCount").get(0);
 		assertTrue(Integer.parseInt(ScheduleCount)==2);//判断是否有两个班期
 
 		//阶段管理和编辑页面，添加两个阶段
@@ -129,7 +128,7 @@ public class BCourseManagerTest {
 				this.addStage(h);
 			}
 			String ScheduleId=bdata.getTargetList(driver.getCurrentUrl(), "(\\d+)(\\d+)").get(1);//从URL中获取当前班期的ID
-			String stageCount = mConn.getData("SELECT COUNT(*)as stageCount FROM course_stage WHERE course_schedule_id=56", "stageCount");
+			String stageCount = mConn.getData("SELECT COUNT(*)as stageCount FROM course_stage WHERE course_schedule_id="+ScheduleId, "stageCount").get(0);
 			assertTrue(Integer.parseInt(stageCount)==2);//判断是否有两个阶段
 		}
 		
@@ -153,7 +152,7 @@ public class BCourseManagerTest {
 		courseManager_page.select_scheduleAtStudent("1");//选择班期
 		courseManager_page.click_SubmitBTN();//保存
 		String course_id = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
-		String studentCount = mConn.getData("SELECT COUNT(*) as studentCount FROM course_schedule_has_student WHERE course_id="+course_id, "studentCount");
+		String studentCount = mConn.getData("SELECT COUNT(*) as studentCount FROM course_schedule_has_student WHERE course_id="+course_id, "studentCount").get(0);
 		assertTrue(Integer.parseInt(studentCount)==8);
 	}
 	
