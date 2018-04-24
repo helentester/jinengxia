@@ -25,7 +25,8 @@ public class mysql_conn {
 
 	public static void main(String[] args) {
 		mysql_conn mConn = new mysql_conn();
-		System.out.println(mConn.getData("SELECT id from stage_period where stage_id=127", "id").get(0));
+		//System.out.println(mConn.getData("SELECT id from stage_period where stage_id=127", "id").get(0));
+		mConn.updateData("UPDATE course_stage SET name='修改阶段2' where course_schedule_id=67 ORDER BY id ASC LIMIT 1;");
 	}
 
 	/* 链接数据库 */
@@ -36,25 +37,6 @@ public class mysql_conn {
 			System.out.println("数据库连接失败！");
 			e.printStackTrace();
 		}
-	}
-
-	/* 执行SQL语句:查询并返回结果, 这是单结果返回，我们测试的时候就是根据条件查询，然后返回一个结果与期望结果比较即可，所以单结果足已 
-	public List<String> getData(String sql, String targetName) {
-		String result = null;
-		try {
-			this.My_conn();// 链接数据库
-			Thread.sleep(1000);// 需要等待数据生成
-			pst = conn.prepareStatement(sql);
-			resultSet = pst.executeQuery();
-			while (resultSet.next()) {
-				result = resultSet.getString(targetName);
-			}
-			this.close();
-		} catch (Exception e) {
-			System.out.println("执行查询语句失败");
-			e.printStackTrace();
-		}
-		return result;
 	}
 
 	/* 执行SQL语句，返回查询结果列表(返回列只有一个的情况) */
@@ -74,6 +56,19 @@ public class mysql_conn {
 			e.printStackTrace();
 		}
 		return result;
+	}
+	
+	/*修改或删除数据*/
+	public void updateData(String sql) {
+		try {
+			this.My_conn();
+			pst = conn.prepareStatement(sql);
+			pst.executeUpdate();
+			this.close();
+		} catch (Exception e) {
+			System.out.println("执行语句失败");
+			e.printStackTrace();
+		}
 	}
 
 	/* 关闭链接 */

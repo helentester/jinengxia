@@ -19,7 +19,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterClass;
 
-@Test(dependsOnGroups="BCourseManagerTest")
+@Test(groups="TClassManagerTest",dependsOnGroups="BCourseManagerTest")
 public class TClassManagerTest {
 	loginTest loginTest = new loginTest();
 	WebDriver driver = loginTest.get_driver("helen_student01", "123456");
@@ -47,8 +47,10 @@ public class TClassManagerTest {
 
 	@Test(description = "导入课时列表")
 	public void inputClassList() throws IOException, InterruptedException {
-		TClass_page class_page = PageFactory.initElements(driver, TClass_page.class);
-		class_page.sendkeys_inputFile(bdata.getFilePath("data/classList.xlsx"));// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
+		class_page = PageFactory.initElements(driver, TClass_page.class);
+		String firePath = bdata.getFilePath("testFile/classList.xlsx");
+		System.out.println(firePath);
+		class_page.sendkeys_inputFile(firePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
 		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
 		String periodCount = mConn
 				.getData("SELECT COUNT(*)as periodCount FROM stage_period where stage_id=" + stageId, "periodCount")
@@ -118,13 +120,13 @@ public class TClassManagerTest {
 	}
 	
 	/*内容管理页面的公共控件操作：导读内容、附件上传*/
-	public void editorDo(WebDriver driver,String massageTile,String classID) throws IOException {
+	private void editorDo(WebDriver driver,String massageTile,String classID) throws IOException {
 		class_page.sendkeys_searchWords(classID);
 		class_page.click_searchBTN();// 查询按钮
 		class_page.click_editBTN();// 内容管理按钮
 		class_page.sendkeys_editor(driver, massageTile+classID);// 输入内容
-		class_page.sendkeys_inputMassageFile(bdata.getFilePath("data/测试用导入.rar"));// 导入rar文件
-		class_page.sendkeys_inputMassageFile(bdata.getFilePath("data/env.tar"));// 导入tar文件
-		class_page.sendkeys_inputMassageFile(bdata.getFilePath("data/interface_demo.zip"));// 导入zip文件
+		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/测试用导入.rar"));// 导入rar文件
+		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/env.tar"));// 导入tar文件
+		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/interface_demo.zip"));// 导入zip文件
 	}
 }

@@ -29,6 +29,12 @@ public class index_page extends BasePage {
 	public Boolean loginBTN_displayed() {
 		return this.findMyElement(loginBTN).isDisplayed();// 判断登录按钮是否存在
 	}
+	
+	@FindBy(linkText="我的技能班")
+	private WebElement myCourseLink;//“我的技能班”链接
+	public void click_myCourseLink() {
+		this.click(myCourseLink);
+	}
 
 	@FindBy(xpath = ".//*[@id='header']/div/ul/li[3]/a/img")
 	private WebElement myImg;// 用户头像

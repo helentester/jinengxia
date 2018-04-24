@@ -26,6 +26,11 @@ public class myCourse_page extends BasePage{
 		this.click(myOrderLink);//点击我的订单链接
 	}
 	
+	@FindBy(xpath="(html/body/div[1]/div[2]/div[2]/ul/li)[last()]/div[2]/a")
+	private WebElement myCourseLink;//“我的技能班”列表中最后一个班
+	public String get_myCourseLink() {
+		return this.findMyElement(myCourseLink).getAttribute("href");//获取链接
+	}
 	
 
 }

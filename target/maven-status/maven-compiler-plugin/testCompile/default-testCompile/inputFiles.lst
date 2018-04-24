@@ -1,6 +1,10 @@
+E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\websiteTest\TClassManagerTest.java
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\orderAplipay_page.java
+E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\backend_pages\BCourseManager_page.java
+E:\eclipse_workplace\jinengxia\src\test\java\common\BaseData.java
 E:\eclipse_workplace\jinengxia\src\test\java\common\BaseWindows.java
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\course_page.java
+E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\backendTest\BCourseManagerTest.java
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\websiteTest\loginTest.java
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\login_page.java
 E:\eclipse_workplace\jinengxia\src\test\java\common\mysql_conn.java
@@ -12,5 +16,7 @@ E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\myOrd
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\orderPay_page.java
 E:\eclipse_workplace\jinengxia\src\test\java\common\BasePage.java
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\backendTest\BLoginTest.java
+E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\TIndex_page.java
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\myCourse_page.java
+E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\TClass_page.java
 E:\eclipse_workplace\jinengxia\src\test\java\jinengxia_WebUI\website_pages\orderDetail_page.java

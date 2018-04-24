@@ -26,7 +26,7 @@ public class BaseData {
 //		for (int h = 0; h < 3; h++) {
 //			System.out.println("开始时间："+baseData.getTimeByMonthsAndDays(h,1)+",结束时间"+baseData.getTimeByMonthsAndDays(h+1,0)); 
 //		}
-		System.out.println(baseData.getFilePath("data/classList.xlsx")); 
+		System.out.println(baseData.getFilePath("src/test/java/testFile/classList.xlsx")); 
 	}
 
 	/*返回参数与随机数并接成新的值*/

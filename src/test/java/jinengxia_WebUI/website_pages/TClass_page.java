@@ -26,7 +26,7 @@ public class TClass_page extends BasePage{
 	private WebElement inputFile;//导入文件的输入框（课时导入和内容管理中的导入都用同样的对象）
 	public void sendkeys_inputFile(String s) {
 		this.sendkeys(inputFile, s);//输入导入文件的路径
-		this.findMyElement(inputFile).sendKeys(Keys.ENTER);//回车
+		//this.findMyElement(inputFile).sendKeys(Keys.ENTER);//回车
 	}
 	
 	@FindBy(xpath=".//*[@id='app']/div[1]/section/div/div[1]/form/div[1]/label[2]")
