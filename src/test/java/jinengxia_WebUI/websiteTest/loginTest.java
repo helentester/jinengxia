@@ -41,8 +41,6 @@ public class loginTest {
 		WebDriver driver = this.get_driver("lanna100","123456");
 		// 退出登录操作
 		index_page index_page = PageFactory.initElements(driver, index_page.class);
-//		Actions actions = new Actions(driver);
-//		actions.moveToElement(index_page.get_myImg()).perform();
 		index_page.click_loginOut(driver);
 		assertTrue(index_page.loginBTN_displayed());
 		driver.quit();
