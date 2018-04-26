@@ -30,7 +30,7 @@ public class index_page extends BasePage {
 		return this.findMyElement(loginBTN).isDisplayed();// 判断登录按钮是否存在
 	}
 	
-	@FindBy(xpath=".//*[@id='header']/div/ul/li[2]/a")
+	@FindBy(xpath=".//*[@id='header']/div/ul/li[2]/a[1]")
 	private WebElement myCourseLink;//“我的技能班”链接
 	public void click_myCourseLink() {
 		this.click(myCourseLink);
