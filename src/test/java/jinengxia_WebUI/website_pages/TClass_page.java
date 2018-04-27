@@ -20,7 +20,7 @@ public class TClass_page extends BasePage{
 		// TODO Auto-generated constructor stub
 	}
 	
-	@FindBy(className="webuploader-element-invisible")
+	@FindBy(xpath=".//*[@id='app']/div[1]/section/h2/div/div[2]/input")
 	private WebElement inputFile;//导入文件的输入框（课时导入和内容管理中的导入都用同样的对象）
 	public void sendkeys_inputFile(String s) {
 		this.sendkeys(inputFile, s);//输入导入文件的路径
@@ -95,7 +95,7 @@ public class TClass_page extends BasePage{
 	public void click_searchBTN() {
 		this.click(searchBTN);
 	}
-	
+
 	@FindBy(xpath=".//*[@id='app']/div[1]/section/div/div[2]/table/tbody/tr[1]/td[7]/a[1]")
 	private WebElement editBTN;//列表第一个内容管理按钮
 	public void click_editBTN() {
@@ -111,7 +111,8 @@ public class TClass_page extends BasePage{
 	    //jsExecutor.executeScript("arguments[0].innerHTML = '<h1>Selenium Test </h1>I love Selenium <br> this article Post By Selenium WebDriver<br><h2>Create By Young</h2>'", myElement);
 	}
 	
-	@FindBy(xpath=".//*[@id='app']/div[3]/div/div/div[3]/div/div/div[2]/input")
+					
+	@FindBy(xpath=".//*[@id='app']/div[4]/div/div/div[3]/div/div/div[2]/input")
 	private WebElement inputMassageFile;//内容管理页面导入文件
 	public void sendkeys_inputMassageFile(String s) {
 		this.sendkeys(inputMassageFile, s);

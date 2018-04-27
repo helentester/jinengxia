@@ -11,11 +11,13 @@
 			<run>
 				<include name="TClassManagerTest"></include>
 				<include name="BCourseManagerTest"></include>
+				<include name="TClassManagerTest"></include>
 			</run>
 		</groups>
 		<classes>
 			<class name="jinengxia_WebUI.backendTest.BCourseManagerTest"></class>
 			<class name="jinengxia_WebUI.websiteTest.TClassManagerTest"></class>
+			<class name="jinengxia_WebUI.websiteTest.SCourseLearning"></class>
 		</classes>
 	</test>
 </suite>

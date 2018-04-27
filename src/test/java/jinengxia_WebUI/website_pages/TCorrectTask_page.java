@@ -50,6 +50,12 @@ public class TCorrectTask_page extends BasePage{
 		return this.findMyElement(score).getText();
 	}
 	
+	@FindBy(className="current-comment-text")
+	private WebElement teacherNote;//老师评语
+	public void sendkeys_teacherNote(String s) {
+		this.sendkeys(teacherNote, s);
+	}
+	
 	@FindBy(className="btn-correcting")
 	private WebElement submitBTN;//确认批改按钮
 	public void click_submitBTN() {

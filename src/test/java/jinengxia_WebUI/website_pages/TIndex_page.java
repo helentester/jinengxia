@@ -37,5 +37,17 @@ public class TIndex_page extends BasePage{
 	public void click_classLink() {
 		this.click(classLink);
 	}
+	
+	@FindBy(xpath="html/body/div[1]/section/main/div/ul/li[2]/div/p[2]/a[1]")
+	private WebElement secondClassLink;//第二个阶段的课时管理链接
+	public void click_secondClassLink() {
+		this.click(secondClassLink);
+	}
+	
+	@FindBy(xpath=".//*[@id='app']/div[1]/ol/li[2]/a")
+	private WebElement scheduleLink;//面包屑导航：第二个标签，班期
+	public void click_scheduleLink() {
+		this.click(scheduleLink);
+	}
 
 }

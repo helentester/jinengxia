@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="功能模块单元测试">
+ 
 	<parameter name="websiteURL" value="http://dev.jinengxia.com"></parameter>
 	<test name="前台单元测试">
 		<classes>
@@ -17,4 +18,9 @@
 			<class name="jinengxia_WebUI.backendTest.BLoginTest"></class>
 		</classes>
 	</test>
+	<!-- <test name="单个调试">
+	<classes>
+	<class name="jinengxia_WebUI.websiteTest.TClassManagerTest"></class>
+	</classes>
+	</test>-->
 </suite>

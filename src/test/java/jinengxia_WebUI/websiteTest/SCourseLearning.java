@@ -30,6 +30,7 @@ import org.testng.annotations.AfterClass;
 /**
  * 描述：技能班提交作业和批改作业
  */
+@Test(dependsOnGroups="TClassManagerTest")
 public class SCourseLearning {
 	loginTest loginTest = new loginTest();
 	mysql_conn mConn = new mysql_conn();
@@ -43,10 +44,10 @@ public class SCourseLearning {
 	String schedule_id;//班期ID
 	String period_id;//课时ID
 	
-	@Test(description="提交作业",enabled=false)
+	@Test(description="提交作业")
 	public void submitTask() throws IOException {
 		//登录前台
-		driver = loginTest.get_driver("du002", "123456");
+		driver = loginTest.get_driver("du004", "123456");
 		index_page = PageFactory.initElements(driver, index_page.class);//前台首页
 		index_page.click_myCourseLink();// 点击我的技能班
 		//切换到我的技能班页面
@@ -66,17 +67,18 @@ public class SCourseLearning {
 		String period_id = mConn.getData("SELECT id from stage_period where stage_id="+stage_id+" and type=3 and id not in (SELECT period_id from user_period_task where user_id="+studentUID+" and `status` in(3,4,5)) ORDER BY id ASC LIMIT 1;", "id").get(0);
 		driver.get("https://dev.jinengxia.com/user/class/index?schedule_id="+schedule_id+"#"+period_id);//直接进入第一个可提交的作业课时
 		driver.navigate().refresh();//需要刷新网页才可以真的打开作业页面
+		course_page.click_submitBTN();//打开提交作业窗口
 		course_page.sendkeys_taskEditor(driver, "学员UID＝"+studentUID+"的作业");
 		course_page.sendkeys_taskFile(baseData.getFilePath("testFile/测试用导入.rar"));
 		course_page.sendkeys_taskFile(baseData.getFilePath("testFile/env.tar"));
 		course_page.sendkeys_taskFile(baseData.getFilePath("testFile/interface_demo.zip"));
-		course_page.click_submitBTN();
+		course_page.click_submitTaskBTN();//提交作业
 		//assertEquals(false, course_page.get_submitBTN());//判断提交按钮此时应当是不可点击的
 		assertEquals("待批改", course_page.get_taskType());
 		driver.quit();
 	}
 	
-	@Test(description="老师批改作业")
+	@Test(description="老师批改作业",dependsOnMethods="submitTask")
 	public void correctTask() {
 		driver = loginTest.get_driver("helen_student01", "123456");
 		period_id="1102";
@@ -85,18 +87,20 @@ public class SCourseLearning {
 		driver.get("https://dev.jinengxia.com/edu/period/task-view?id="+userTaskID+"&period_id="+period_id);
 		driver.navigate().refresh();
 		correctTask_page = PageFactory.initElements(driver, TCorrectTask_page.class);//批改作业页面
-		correctTask_page.click_start1();
-		correctTask_page.click_start2();
+		correctTask_page.click_start1();//设置第一个维度的星级：满星
+		correctTask_page.click_start2();//设置第二个维度的星级：满星
+		correctTask_page.sendkeys_teacherNote("好流B的作品，不用上课了，直接毕业吧！");//输入老师评语
+		correctTask_page.click_submitBTN();//确认批改
 		//获取分类
 		int score1 = Integer.parseInt(baseData.getTargetList(correctTask_page.get_start1Score(), "\\d+").get(0)) ;//获取第一个评分
 		int score2 = Integer.parseInt(baseData.getTargetList(correctTask_page.get_start2Score(), "\\d+").get(0)) ;//获取第二个评分
 		int score = Integer.parseInt(correctTask_page.get_score());//总得分
+		int scoreInData = Integer.parseInt(mConn.getData("SELECT SUM(score) as score from course_score WHERE course_id=(SELECT course_id from course_stage WHERE id=(SELECT stage_id FROM stage_period where id=1102))", "score").get(0));
+		int taskStatu = Integer.parseInt(mConn.getData("SELECT status from user_period_task where id="+userTaskID, "status").get(0));//数据库中作业的状态
 		assertEquals(score, score1+score2);//判断所有得分是不是总分之和
-	}
-
-	@AfterClass
-	public void afterClass() {
-		// driver.quit();
+		assertEquals(score,scoreInData);//把总得分与数据库中的所有维度评分之和比较
+		assertEquals(taskStatu, 5);//判断作业的状态是否已批改：5＝通过
+		driver.quit();
 	}
 
 }
