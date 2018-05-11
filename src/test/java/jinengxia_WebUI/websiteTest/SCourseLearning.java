@@ -22,6 +22,8 @@ import org.testng.annotations.BeforeClass;
 import static org.testng.Assert.assertEquals;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
@@ -30,7 +32,7 @@ import org.testng.annotations.AfterClass;
 /**
  * 描述：技能班提交作业和批改作业
  */
-@Test(dependsOnGroups="TClassManagerTest")
+//(dependsOnGroups="TClassManagerTest")
 public class SCourseLearning {
 	loginTest loginTest = new loginTest();
 	mysql_conn mConn = new mysql_conn();
@@ -44,10 +46,25 @@ public class SCourseLearning {
 	String schedule_id;//班期ID
 	String period_id;//课时ID
 	
-	@Test(description="提交作业")
-	public void submitTask() throws IOException {
+	@Test(description="多个学员提交作业",enabled=false)
+	public void submitTaskByList() throws IOException {
+		List<String> studentList=new ArrayList<String>();
+		studentList.add("du001");
+		studentList.add("du002");
+		studentList.add("du003");
+		studentList.add("du004");
+		studentList.add("du005");
+		studentList.add("du006");
+		studentList.add("du007");
+		
+		for(int i=0;i<studentList.size();i++) {
+			submitTask(studentList.get(i));
+		}
+	}
+	
+	public void submitTask(String studentName) throws IOException {
 		//登录前台
-		driver = loginTest.get_driver("du004", "123456");
+		driver = loginTest.get_driver(studentName, "123456");
 		index_page = PageFactory.initElements(driver, index_page.class);//前台首页
 		index_page.click_myCourseLink();// 点击我的技能班
 		//切换到我的技能班页面
@@ -55,7 +72,7 @@ public class SCourseLearning {
 		course_page= PageFactory.initElements(driver, myCourse_page.class);
 		studentUID = baseData.getTargetList(course_page.get_studentUID(), "\\d+").get(0);//获取当前学员UID
 		schedule_id = baseData.getTargetList(course_page.get_myCourseLink(), "\\d+").get(0);// 获取班期ID
-		// 设计阶段的开始结束时间，使得当前班期是正在学习状态
+		// 设置阶段的开始结束时间，使得当前班期是正在学习状态
 		mConn.updateData("UPDATE course_stage SET start_time=UNIX_TIMESTAMP('" + baseData.getTimeByMonthsAndDays(0, -1)
 				+ "'),end_time=UNIX_TIMESTAMP('" + baseData.getTimeByMonthsAndDays(1, 0)
 				+ "') where course_schedule_id=" + schedule_id + " ORDER BY id ASC LIMIT 1;");
@@ -78,29 +95,62 @@ public class SCourseLearning {
 		driver.quit();
 	}
 	
-	@Test(description="老师批改作业",dependsOnMethods="submitTask")
+	@Test(description="老师批改作业")
 	public void correctTask() {
 		driver = loginTest.get_driver("helen_student01", "123456");
-		period_id="1102";
-		String userTaskID = mConn.getData("SELECT id from user_period_task where period_id="+period_id+" and `status` in(2,3) ORDER BY id DESC LIMIT 1;", "id").get(0);//学员作业ID
-		//直接进入批改作业页面，批改第一个作业
-		driver.get("https://dev.jinengxia.com/edu/period/task-view?id="+userTaskID+"&period_id="+period_id);
-		driver.navigate().refresh();
-		correctTask_page = PageFactory.initElements(driver, TCorrectTask_page.class);//批改作业页面
-		correctTask_page.click_start1();//设置第一个维度的星级：满星
-		correctTask_page.click_start2();//设置第二个维度的星级：满星
-		correctTask_page.sendkeys_teacherNote("好流B的作品，不用上课了，直接毕业吧！");//输入老师评语
-		correctTask_page.click_submitBTN();//确认批改
-		//获取分类
-		int score1 = Integer.parseInt(baseData.getTargetList(correctTask_page.get_start1Score(), "\\d+").get(0)) ;//获取第一个评分
-		int score2 = Integer.parseInt(baseData.getTargetList(correctTask_page.get_start2Score(), "\\d+").get(0)) ;//获取第二个评分
-		int score = Integer.parseInt(correctTask_page.get_score());//总得分
-		int scoreInData = Integer.parseInt(mConn.getData("SELECT SUM(score) as score from course_score WHERE course_id=(SELECT course_id from course_stage WHERE id=(SELECT stage_id FROM stage_period where id=1102))", "score").get(0));
-		int taskStatu = Integer.parseInt(mConn.getData("SELECT status from user_period_task where id="+userTaskID, "status").get(0));//数据库中作业的状态
-		assertEquals(score, score1+score2);//判断所有得分是不是总分之和
-		assertEquals(score,scoreInData);//把总得分与数据库中的所有维度评分之和比较
-		assertEquals(taskStatu, 5);//判断作业的状态是否已批改：5＝通过
+		period_id="1747";
+		List<String> userTaskID = mConn.getData("SELECT id from user_period_task where period_id="+period_id+" and `status` in(2,3) ORDER BY id DESC LIMIT 1;", "id");//学员作业ID
+		//System.out.println(userTaskID);
+		//直接进入批改作业页面，批改作业
+		for (int i = 0; i < userTaskID.size(); i++) {
+			driver.get("https://dev.jinengxia.com/edu/period/task-view?id="+userTaskID.get(i)+"&period_id="+period_id);
+			driver.navigate().refresh();
+			correctTask_page = PageFactory.initElements(driver, TCorrectTask_page.class);//批改作业页面
+			//给第一个评分维度设置一个随机的星级
+			int startNO = baseData.getRandomInt(10, 5);
+			if(startNO==5) {
+				correctTask_page.click_start5();
+			}
+			else if(startNO==6){
+				correctTask_page.click_start6();
+			}
+			else if(startNO==7){
+				correctTask_page.click_start7();
+			}
+			else if(startNO==8){
+				correctTask_page.click_start8();
+			}
+			else if(startNO==9){
+				correctTask_page.click_start9();
+			}
+			else {
+				correctTask_page.click_start1();//设置第一个维度的星级：满星
+			}
+			//给第二个维度设置满星
+			correctTask_page.click_SecondStart5();//设置第二个维度的星级：满星
+			correctTask_page.sendkeys_teacherNote("好流B的作品，不用上课了，直接毕业吧！");//输入老师评语
+			//获取分数
+			int score1 = Integer.parseInt(baseData.getTargetList(correctTask_page.get_start1Score(), "\\d+").get(0)) ;//获取第一个评分
+			int score2 = Integer.parseInt(baseData.getTargetList(correctTask_page.get_start2Score(), "\\d+").get(0)) ;//获取第二个评分
+			int score = Integer.parseInt(correctTask_page.get_score());//总得分
+			//确认批改
+			correctTask_page.click_submitBTN();
+			//数据库获取数据
+			int pass_score = Integer.parseInt(mConn.getData("SELECT pass_score from course where id=(SELECT course_id from course_schedule where id=(SELECT schedule_id from stage_period where id="+period_id+"))", "pass_score").get(0));
+			int taskStatu = Integer.parseInt(mConn.getData("SELECT status from user_period_task where id="+userTaskID.get(i), "status").get(0));//数据库中作业的状态
+			assertEquals(score, score1+score2);//判断所有得分是不是总分之和
+			if(score>=pass_score) {
+				assertEquals(taskStatu, 5);//判断作业的状态是否已批改：5＝通过
+			}
+			else {
+				assertEquals(taskStatu, 6);//判断作业的状态是否已批改：6＝不通过
+			}
+			
+		}
+			
 		driver.quit();
 	}
+	
+
 
 }

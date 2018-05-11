@@ -26,13 +26,21 @@ public class BaseData {
 //		for (int h = 0; h < 3; h++) {
 //			System.out.println("开始时间："+baseData.getTimeByMonthsAndDays(h,1)+",结束时间"+baseData.getTimeByMonthsAndDays(h+1,0)); 
 //		}
-		System.out.println(baseData.getFilePath("src/test/java/testFile/classList.xlsx")); 
+		//System.out.println(baseData.getFilePath("src/test/java/testFile/classList.xlsx")); 
+		System.out.println(baseData.getRandomInt(10, 5));
 	}
 
 	/*返回参数与随机数并接成新的值*/
 	public String getRandomName(String s) {
 		Random random = new Random();
 		return s+Integer.toString(random.nextInt(10000));
+	}
+	
+	/*返回某个范围内的整数*/
+	public int getRandomInt(int max,int min) {
+		Random random = new Random();
+		int s = random.nextInt(max) % (max - min + 1) + min;
+		return s;
 	}
 	
 	/* 通过正则表达式匹配，返回结果列表 */

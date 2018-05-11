@@ -20,10 +20,46 @@ public class TCorrectTask_page extends BasePage{
 		// TODO Auto-generated constructor stub
 	}
 	
-	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[10]")
-	private WebElement start1;//第一个评分维度满星10个
+	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[5]")
+	private WebElement start5;//第一个评分维度,星5个
+	public void click_start5() {
+		this.click(start5);
+	}
+	
+	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[6]")
+	private WebElement start6;//第一个评分维度,星6个
+	public void click_start6() {
+		this.click(start6);
+	}
+	
+	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[7]")
+	private WebElement start7;//第一个评分维度,星7个
+	public void click_start7() {
+		this.click(start7);
+	}
+	
+	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[8]")
+	private WebElement start8;//第一个评分维度,星8个
+	public void click_start8() {
+		this.click(start8);
+	}
+	
+	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[9]")
+	private WebElement start9;//第一个评分维度,星9个
+	public void click_start9() {
+		this.click(start9);
+	}
+	
+	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[1]")
+	private WebElement start1;//第一个评分维度,星10个
 	public void click_start1() {
 		this.click(start1);
+	}
+	
+	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[2]/i[10]")
+	private WebElement start10;//第一个评分维度满星10个
+	public void click_start10() {
+		this.click(start10);
 	}
 	
 	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[1]/span[3]")
@@ -33,9 +69,9 @@ public class TCorrectTask_page extends BasePage{
 	}
 	
 	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[2]/span[2]/i[5]")
-	private WebElement start2;//第二个评分维度满星5个
-	public void click_start2() {
-		this.click(start2);
+	private WebElement SecondStart5;//第二个评分维度满星5个
+	public void click_SecondStart5() {
+		this.click(SecondStart5);
 	}
 	
 	@FindBy(xpath="html/body/div[1]/section/main/div[1]/div/div[2]/div[1]/ul/li[2]/span[3]")

@@ -32,7 +32,7 @@ public class TStudentTeamManager_page extends BasePage{
 		this.click(autoCreateTeamBTN);
 	}
 	
-	@FindBy(className="form-control")
+	@FindBy(xpath=".//*[@id='app']/div/section/div[2]/div[1]/div[2]/div/input")
 	private WebElement maxTeamNO;//随权分组－每组最大人数
 	public void sendkeys_maxTeamNO(String s) {
 		this.sendkeys(maxTeamNO, s);

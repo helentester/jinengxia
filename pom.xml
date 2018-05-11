@@ -76,7 +76,7 @@
 				<configuration>
 					<suiteXmlFiles>
 						<!-- 主要业务流测试 -->
-						<suiteXmlFile>src/test/java/testNGFiles/myTestNG.xml</suiteXmlFile>
+						<!--  <suiteXmlFile>src/test/java/testNGFiles/myTestNG.xml</suiteXmlFile>-->
 						<!-- 普通功能单元测试 -->
 						<suiteXmlFile>src/test/java/testNGFiles/UnitCaseTestNG.xml</suiteXmlFile>
 					</suiteXmlFiles>

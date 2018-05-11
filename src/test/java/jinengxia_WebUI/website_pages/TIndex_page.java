@@ -32,6 +32,12 @@ public class TIndex_page extends BasePage{
 		this.click(firstSchedule);
 	}
 	
+	@FindBy(xpath="(html/body/div[1]/section/dl/dd)[last()-1]/a")
+	private WebElement secondSchedule;//第二个班期（排在列表倒数第二）
+	public void click_secondSchedule() {
+		this.click(secondSchedule);
+	}
+	
 	@FindBy(xpath="html/body/div[1]/section/main/div/ul/li[1]/div/p[2]/a[1]")
 	private WebElement classLink;//第一个阶段的课时管理链接
 	public void click_classLink() {

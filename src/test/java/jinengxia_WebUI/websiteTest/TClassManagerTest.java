@@ -59,7 +59,6 @@ public class TClassManagerTest {
 		System.out.println(firePath);
 		class_page.sendkeys_inputFile(firePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
 		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
-		System.out.println(stageId);
 		Thread.sleep(2000);
 		String periodCount = mConn
 				.getData("SELECT COUNT(*)as periodCount FROM stage_period where stage_id=" + stageId, "periodCount")
@@ -131,13 +130,27 @@ public class TClassManagerTest {
 	@Test(description="第二个阶段的所有课时操作",dependsOnGroups="firstStageClassManager")
 	public void secondStageClassManager() throws IOException, InterruptedException {
 		tIndex_page.click_firstSchedule();// 点击面包屑导航：班期
-		//tIndex_page.click_classLink();// 第一个阶段的课时管理链接
 		tIndex_page.click_secondClassLink();//第二个阶段的课时管理链接
 		this.inputClassList();//导入课时列表
 		this.readMassageEdit();//阅读课内容编辑
 		this.liveMassageEdit();//直播课内容
 		this.videoMassage();//录播课内容
 		this.homeWordMassageEdit();//作业内容
+	}
+	
+	@Test(description="第二个班期，一键复制课时",dependsOnMethods="secondStageClassManager")
+	public void secondScheduleManager() throws InterruptedException {
+		tIndex_page.click_secondSchedule();//点击第二个班期
+		tIndex_page.click_classLink();//第一个课时管理链接
+		class_page.click_copyClassBTN();//一键复制按钮
+		class_page.click_copyBTN();//复制按钮
+		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
+		System.out.println(stageId);
+		Thread.sleep(2000);
+		String periodCount = mConn
+				.getData("SELECT COUNT(*)as periodCount FROM stage_period where stage_id=" + stageId, "periodCount")
+				.get(0);
+		assertEquals(Integer.parseInt(periodCount), 8);
 	}
 	
 	/*内容管理页面的公共控件操作：导读内容、附件上传*/

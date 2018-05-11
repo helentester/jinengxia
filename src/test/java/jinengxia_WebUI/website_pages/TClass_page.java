@@ -20,6 +20,18 @@ public class TClass_page extends BasePage{
 		// TODO Auto-generated constructor stub
 	}
 	
+	@FindBy(linkText="一键复制课时")
+	private WebElement copyClassBTN;//一键复制课时按钮
+	public void click_copyClassBTN() {
+		this.click(copyClassBTN);
+	}
+	
+	@FindBy(xpath=".//*[@id='app']/div[3]/h2/button")
+	private WebElement copyBTN;//复制按钮
+	public void click_copyBTN() {
+		this.click(copyBTN);
+	}
+	
 	@FindBy(xpath=".//*[@id='app']/div[1]/section/h2/div/div[2]/input")
 	private WebElement inputFile;//导入文件的输入框（课时导入和内容管理中的导入都用同样的对象）
 	public void sendkeys_inputFile(String s) {
@@ -27,6 +39,7 @@ public class TClass_page extends BasePage{
 		//this.findMyElement(inputFile).sendKeys(Keys.ENTER);//回车
 	}
 	
+	/************查询版块***************/
 	@FindBy(xpath=".//*[@id='app']/div[1]/section/div/div[1]/form/div[1]/label[2]")
 	private WebElement checkAll;//多选框：全选
 	public void click_clearCheck() {
