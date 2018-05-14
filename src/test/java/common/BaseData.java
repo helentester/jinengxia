@@ -22,12 +22,12 @@ public class BaseData {
 	public static void main(String[] args) throws IOException {
 		BaseData baseData = new BaseData();
 		//System.out.println(baseData.getRandomName("技能班")); 
-		//System.out.println(baseData.getTargetList("https://backend.dev.jinengxia.com/course/course-teacher-list?course_id=39", "\\d+").get(0));
+		System.out.println(baseData.getTargetList("https://dev.jinengxia.com/edu/period/index?schedule_id=252&course_id=136&stage_id=478&id_or_name=2129", "(\\d+)(\\d+)(\\d+)").get(2));
 //		for (int h = 0; h < 3; h++) {
 //			System.out.println("开始时间："+baseData.getTimeByMonthsAndDays(h,1)+",结束时间"+baseData.getTimeByMonthsAndDays(h+1,0)); 
 //		}
 		//System.out.println(baseData.getFilePath("src/test/java/testFile/classList.xlsx")); 
-		System.out.println(baseData.getRandomInt(10, 5));
+		//System.out.println(baseData.getRandomInt(10, 5));
 	}
 
 	/*返回参数与随机数并接成新的值*/

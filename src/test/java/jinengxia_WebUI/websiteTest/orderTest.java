@@ -22,11 +22,12 @@ import jinengxia_WebUI.website_pages.orderPay_page;
  * 描述：官网前台订单操作
  */
 public class orderTest {
+	loginTest loginTest = new loginTest();
+	WebDriver driver;
 
 	@Test(description="官网下订单操作")
 	public void buy_aplipay() {
-		loginTest loginTest = new loginTest();
-		WebDriver driver= loginTest.get_driver("lanna100","123456");
+		driver= loginTest.get_driver("lanna100","123456");
 		//官网首页
 		index_page index_page = PageFactory.initElements(driver, index_page.class);
 		index_page.click_courseLink();// 点击课程链接按钮

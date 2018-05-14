@@ -1,23 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="技能侠主要业务流测试">
+	<!-- 
 	<test name="前台订单业务">
 		<classes>
 			<class name="jinengxia_WebUI.websiteTest.orderTest" />
 		</classes>
-	</test>
+	</test> -->
 	<test name="后台技能班业务、老师工作台课时设置业务">
 		<groups>
 			<run>
-				<include name="TClassManagerTest"></include>
 				<include name="BCourseManagerTest"></include>
 				<include name="TClassManagerTest"></include>
+				<include name="TStudentTeamManagerTest"></include>
+				<include name="SCourseLearning"></include>
 			</run>
 		</groups>
 		<classes>
+			<!-- 后台技能班管理：添加技能班等信息 -->
 			<class name="jinengxia_WebUI.backendTest.BCourseManagerTest"></class>
+			<!-- 教务工作台：课时管理 -->
 			<class name="jinengxia_WebUI.websiteTest.TClassManagerTest"></class>
+			<!-- 教务工作台：班级管理 -->
+			<class name="jinengxia_WebUI.websiteTest.TStudentTeamManagerTest"></class>
+			<!-- 前台：学员管理；教务工作台：老师批改作业 -->
 			<class name="jinengxia_WebUI.websiteTest.SCourseLearning"></class>
+			
 		</classes>
 	</test>
 </suite>

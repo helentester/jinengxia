@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class BasePage {
 	WebDriver driver;
-	private final int timeOut = 20;//等待时间
+	private final int timeOut = 30;//等待时间
 
 	public BasePage(WebDriver driver) {
 		// TODO Auto-generated constructor stub

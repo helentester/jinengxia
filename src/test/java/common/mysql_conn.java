@@ -44,7 +44,7 @@ public class mysql_conn {
 		List<String> result = new ArrayList<String>();
 		try {
 			this.My_conn();// 链接数据库
-			Thread.sleep(1000);// 需要等待数据生成
+			Thread.sleep(5000);// 需要等待数据生成
 			pst = conn.prepareStatement(sql);
 			resultSet = pst.executeQuery();
 			while (resultSet.next()) {

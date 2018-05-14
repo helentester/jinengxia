@@ -32,7 +32,7 @@ import org.testng.annotations.AfterClass;
 /**
  * 描述：技能班提交作业和批改作业
  */
-//(dependsOnGroups="TClassManagerTest")
+@Test(groups="SCourseLearning",description="学员提交作业，老师批改作业",dependsOnGroups="TClassManagerTest")
 public class SCourseLearning {
 	loginTest loginTest = new loginTest();
 	mysql_conn mConn = new mysql_conn();
@@ -46,7 +46,7 @@ public class SCourseLearning {
 	String schedule_id;//班期ID
 	String period_id;//课时ID
 	
-	@Test(description="多个学员提交作业",enabled=false)
+	@Test(description="多个学员提交作业")
 	public void submitTaskByList() throws IOException {
 		List<String> studentList=new ArrayList<String>();
 		studentList.add("du001");
@@ -95,7 +95,7 @@ public class SCourseLearning {
 		driver.quit();
 	}
 	
-	@Test(description="老师批改作业")
+	@Test(description="老师批改作业",dependsOnMethods="submitTaskByList")
 	public void correctTask() {
 		driver = loginTest.get_driver("helen_student01", "123456");
 		period_id="1747";

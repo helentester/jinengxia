@@ -56,9 +56,8 @@ public class TClassManagerTest {
 	public void inputClassList() throws IOException, InterruptedException {
 		class_page = PageFactory.initElements(driver, TClass_page.class);
 		String firePath = bdata.getFilePath("testFile/classList.xlsx");
-		System.out.println(firePath);
 		class_page.sendkeys_inputFile(firePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
-		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
+		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前阶段ID
 		Thread.sleep(2000);
 		String periodCount = mConn
 				.getData("SELECT COUNT(*)as periodCount FROM stage_period where stage_id=" + stageId, "periodCount")
@@ -69,7 +68,6 @@ public class TClassManagerTest {
 
 	@Test(description = "编辑阅读课时的内容", dependsOnMethods = "inputClassList",groups="firstStageClassManager")
 	public void readMassageEdit() throws IOException {
-		//String stageID = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);// 获取当前阶段名称
 		List<String> classList = mConn.getData("SELECT id from stage_period where type=1 and stage_id=" + this.stageId,
 				"id");
 		for (int i = 0; i < classList.size(); i++) {
@@ -78,13 +76,13 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_reading where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			assertTrue(Integer.parseInt(periodCount) == 1);
+			System.out.println(classList.get(i));
+			assertEquals(periodCount, "1");
 		}
 	}
 	
 	@Test(description="编辑录播课时的内容", dependsOnMethods = "inputClassList",groups="firstStageClassManager")
 	public void videoMassage() throws IOException {
-		//String stageID = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);// 获取当前阶段名称
 		List<String> classList = mConn.getData("SELECT id from stage_period where type=2 and stage_id=" + this.stageId,
 				"id");
 		for (int i = 0; i < classList.size(); i++) {
@@ -94,13 +92,13 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_video where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			assertTrue(Integer.parseInt(periodCount) == 1);
+			System.out.println(classList.get(i));
+			assertEquals(periodCount, "1");
 		}
 	}
 	
 	@Test(description="编辑作业课时的内容", dependsOnMethods = "inputClassList",groups="firstStageClassManager")
 	public void homeWordMassageEdit() throws IOException {
-		//String stageID= bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);// 获取当前阶段名称
 		List<String> classList = mConn.getData("SELECT id from stage_period where type=3 and stage_id=" + this.stageId, "id");
 		for (int i = 0; i < classList.size(); i++) {
 			this.editorDo(driver, "作业要求导读内容：" , classList.get(i));//插入导读内容、上传附件
@@ -108,13 +106,14 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_task where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			assertTrue(Integer.parseInt(periodCount) == 1);
+			System.out.println(classList.get(i));
+			assertEquals(periodCount, "1");
 		}
 	}
 	
 	@Test(description="编辑直播课时的内容", dependsOnMethods = "inputClassList",groups="firstStageClassManager")
 	public void liveMassageEdit() throws IOException {
-		//String stageID= bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);// 获取当前阶段名称
+		//stageId = bdata.getTargetList(driver.getCurrentUrl(), "(\\d+)(\\d+)(\\d+)").get(2);//获取当前阶段ID
 		List<String> classList = mConn.getData("SELECT id from stage_period where type=4 and stage_id=" + this.stageId, "id");
 		for (int i = 0; i < classList.size(); i++) {
 			this.editorDo(driver, "直播课导读内容：" , classList.get(i));//插入导读内容、上传附件
@@ -123,7 +122,8 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_live where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			assertTrue(Integer.parseInt(periodCount) == 1);
+			System.out.println(classList.get(i));
+			assertEquals(periodCount, "1");
 		}
 	}
 	
@@ -131,6 +131,7 @@ public class TClassManagerTest {
 	public void secondStageClassManager() throws IOException, InterruptedException {
 		tIndex_page.click_firstSchedule();// 点击面包屑导航：班期
 		tIndex_page.click_secondClassLink();//第二个阶段的课时管理链接
+		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前阶段ID
 		this.inputClassList();//导入课时列表
 		this.readMassageEdit();//阅读课内容编辑
 		this.liveMassageEdit();//直播课内容
@@ -145,7 +146,6 @@ public class TClassManagerTest {
 		class_page.click_copyClassBTN();//一键复制按钮
 		class_page.click_copyBTN();//复制按钮
 		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
-		System.out.println(stageId);
 		Thread.sleep(2000);
 		String periodCount = mConn
 				.getData("SELECT COUNT(*)as periodCount FROM stage_period where stage_id=" + stageId, "periodCount")
@@ -158,6 +158,7 @@ public class TClassManagerTest {
 		class_page.sendkeys_searchWords(classID);
 		class_page.click_searchBTN();// 查询按钮
 		class_page.click_editBTN();// 内容管理按钮
+		class_page = PageFactory.initElements(driver, TClass_page.class);
 		class_page.sendkeys_editor(driver, massageTile+classID);// 输入内容
 		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/测试用导入.rar"));// 导入rar文件
 		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/env.tar"));// 导入tar文件

@@ -132,7 +132,6 @@ public class BCourseManagerTest {
 			assertTrue(Integer.parseInt(stageCount)==2);//判断是否有两个阶段
 		}
 		
-		
 	}
 	
 	@Test(description="给技能班添加学员",dependsOnMethods="addCourse")
@@ -152,8 +151,9 @@ public class BCourseManagerTest {
 		courseManager_page.select_scheduleAtStudent("1");//选择班期
 		courseManager_page.click_SubmitBTN();//保存
 		String course_id = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);
+		System.out.println(course_id);
 		String studentCount = mConn.getData("SELECT COUNT(*) as studentCount FROM course_schedule_has_student WHERE course_id="+course_id, "studentCount").get(0);
-		assertTrue(Integer.parseInt(studentCount)==8);
+		assertEquals(studentCount, "8");
 	}
 	
 	/*添加阶段*/
