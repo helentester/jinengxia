@@ -41,7 +41,9 @@ public class SCourseLearning {
 	WebDriver driver;
 	index_page index_page;//前台首页
 	myCourse_page course_page;//技能班学习面
+	TIndex_page tIndex_page;//教务工作台首页
 	TCorrectTask_page correctTask_page;//老师批改作业页面
+	String course_id;//课程ID
 	String studentUID;//学员UID
 	String schedule_id;//班期ID
 	String period_id;//课时ID
@@ -98,7 +100,13 @@ public class SCourseLearning {
 	@Test(description="老师批改作业",dependsOnMethods="submitTaskByList")
 	public void correctTask() {
 		driver = loginTest.get_driver("helen_student01", "123456");
-		period_id="1747";
+		index_page.click_teacherSYSLink(driver);// 点击“教务工作台”
+		windows.changeWindow(driver);// 窗口切换到教务工作台
+		tIndex_page = PageFactory.initElements(driver, TIndex_page.class);
+		tIndex_page.click_courseAtLast();// 点击最后一个技能班
+		tIndex_page.click_firstSchedule();// 点击第一个班期（列表最后）
+		course_id = baseData.getTargetList(driver.getCurrentUrl(), "//d+").get(0);//课程ID
+		period_id=mConn.getData("SELECT id from course_stage where course_id="+course_id+" and start_time< UNIX_TIMESTAMP(NOW()) and end_time>UNIX_TIMESTAMP(NOW())", "id").get(0);//课时ID
 		List<String> userTaskID = mConn.getData("SELECT id from user_period_task where period_id="+period_id+" and `status` in(2,3) ORDER BY id DESC LIMIT 1;", "id");//学员作业ID
 		//System.out.println(userTaskID);
 		//直接进入批改作业页面，批改作业

@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="技能侠主要业务流测试">
+	<listeners>
+		<!-- 添加场景恢复的监听器 -->
+		<listener class-name="common.TestngRetryListener"></listener>
+	</listeners>
 	<!-- 
 	<test name="前台订单业务">
 		<classes>

@@ -104,6 +104,12 @@ public class BCourseManager_page extends BasePage{
 		this.click(selectTeachName);//选择
 	}
 	
+	@FindBy(xpath=".//*[@id='w0']/div[2]/div/button[1]")
+	private WebElement submitTeacherBTN;
+	public void click_submitTeacherBTN() {
+		this.click(submitTeacherBTN);
+	}
+	
 	/***********评分维度管理页面****************/
 	@FindBy(linkText="添加评分纬度")
 	private WebElement addScoreBTN;//添加评分维度按钮

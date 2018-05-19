@@ -15,7 +15,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class BasePage {
 	WebDriver driver;
-	private final int timeOut = 30;//等待时间
+	private final int timeOut = 60;//等待时间
 
 	public BasePage(WebDriver driver) {
 		// TODO Auto-generated constructor stub
@@ -24,14 +24,14 @@ public class BasePage {
 
 	/* 重写senkeys方法 */
 	public void sendkeys(WebElement element, String s) {
-		new WebDriverWait(driver, timeOut).until(ExpectedConditions.visibilityOf(element));// 加入显式等待
+		new WebDriverWait(driver, timeOut).until(ExpectedConditions.visibilityOf(element));// 加入显式等待:判断元素(定位后)是否可见
 		element.clear();// 先清空输入框
 		element.sendKeys(s);// 输入数据
 	}
 
 	/* 重写click方法 */
 	public void click(WebElement element) {
-		new WebDriverWait(driver, timeOut).until(ExpectedConditions.visibilityOf(element));// 加入显式等待
+		new WebDriverWait(driver, timeOut).until(ExpectedConditions.elementToBeClickable(element));// 加入显式等待:判断元素是否可以点击
 		element.click();
 	}
 	

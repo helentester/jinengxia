@@ -29,23 +29,14 @@ import org.testng.annotations.AfterClass;
 @Test(groups="TClassManagerTest",dependsOnGroups="BCourseManagerTest")
 public class TClassManagerTest {
 	loginTest loginTest = new loginTest();
-	WebDriver driver = loginTest.get_driver("helen_student01", "123456");
+	WebDriver driver;
 	BaseData bdata = new BaseData();
 	mysql_conn mConn = new mysql_conn();
 	BaseWindows windows = new BaseWindows();
-	index_page index_page = PageFactory.initElements(driver, index_page.class);
-	TIndex_page tIndex_page = PageFactory.initElements(driver, TIndex_page.class);
-	TClass_page class_page = PageFactory.initElements(driver, TClass_page.class);
+	index_page index_page;
+	TIndex_page tIndex_page;
+	TClass_page class_page;
 	String stageId;
-
-	@BeforeClass
-	public void beforeClass() {
-		index_page.click_teacherSYSLink(driver);// 点击“教务工作台”
-		windows.changeWindow(driver);// 窗口切换到教务工作台
-		tIndex_page.click_courseAtLast();// 点击最后一个技能班
-		tIndex_page.click_firstSchedule();// 点击第一个班期（列表最后）
-		tIndex_page.click_classLink();// 第一个阶段的课时管理链接
-	}
 
 	@AfterClass
 	public void afterClass() {
@@ -54,6 +45,14 @@ public class TClassManagerTest {
 
 	@Test(description = "导入课时列表",groups="firstStageClassManager")
 	public void inputClassList() throws IOException, InterruptedException {
+		driver = loginTest.get_driver("helen_student01", "123456");
+		index_page = PageFactory.initElements(driver, index_page.class);
+		index_page.click_teacherSYSLink(driver);// 点击“教务工作台”
+		windows.changeWindow(driver);// 窗口切换到教务工作台
+		tIndex_page = PageFactory.initElements(driver, TIndex_page.class);
+		tIndex_page.click_courseAtLast();// 点击最后一个技能班
+		tIndex_page.click_firstSchedule();// 点击第一个班期（列表最后）
+		tIndex_page.click_classLink();// 第一个阶段的课时管理链接
 		class_page = PageFactory.initElements(driver, TClass_page.class);
 		String firePath = bdata.getFilePath("testFile/classList.xlsx");
 		class_page.sendkeys_inputFile(firePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
@@ -92,7 +91,6 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_video where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			System.out.println(classList.get(i));
 			assertEquals(periodCount, "1");
 		}
 	}
@@ -106,7 +104,6 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_task where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			System.out.println(classList.get(i));
 			assertEquals(periodCount, "1");
 		}
 	}
@@ -122,7 +119,6 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_live where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			System.out.println(classList.get(i));
 			assertEquals(periodCount, "1");
 		}
 	}

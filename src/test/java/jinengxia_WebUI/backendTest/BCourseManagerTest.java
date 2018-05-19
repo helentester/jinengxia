@@ -66,7 +66,7 @@ public class BCourseManagerTest {
 		courseManager_page.sendkeys_inputTeacherName("helen老师");// 输入老师名称查询老师
 		Thread.sleep(1000);// 这里需要等待下面的控件加载完成
 		courseManager_page.click_selectTeachName();// 选择第一个老师
-		courseManager_page.click_SubmitBTN();// 保存
+		courseManager_page.click_submitTeacherBTN();// 保存
 		assertEquals(courseManager_page.get_teachNameAtCourse(), "helen老师");
 	}
 
@@ -115,7 +115,7 @@ public class BCourseManagerTest {
 		}
 		String courseId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前技能班id
 		String ScheduleCount = mConn.getData("SELECT COUNT(*)as ScheduleCount FROM course_schedule WHERE course_id="+courseId, "ScheduleCount").get(0);
-		assertTrue(Integer.parseInt(ScheduleCount)==2);//判断是否有两个班期
+		assertTrue(Integer.parseInt(ScheduleCount)>=2);//判断是否有两个班期
 
 		//阶段管理和编辑页面，添加两个阶段
 		courseManager_page.click_stageLink();//点击“阶段管理”链接
