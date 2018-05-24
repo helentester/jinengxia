@@ -11,11 +11,7 @@ import common.mysql_conn;
 import jinengxia_WebUI.website_pages.TClass_page;
 import jinengxia_WebUI.website_pages.TIndex_page;
 import jinengxia_WebUI.website_pages.index_page;
-
-import org.testng.annotations.BeforeClass;
-
 import static org.testng.Assert.assertEquals;
-import static org.testng.Assert.assertTrue;
 
 import java.io.IOException;
 import java.util.List;
@@ -42,17 +38,22 @@ public class TClassManagerTest {
 	public void afterClass() {
 		driver.quit();
 	}
-
-	@Test(description = "导入课时列表",groups="firstStageClassManager")
-	public void inputClassList() throws IOException, InterruptedException {
+	
+	@Test(description="进入教务工作台",groups="firstStageClassManager")
+	public void loginEDU() {
 		driver = loginTest.get_driver("helen_student01", "123456");
 		index_page = PageFactory.initElements(driver, index_page.class);
 		index_page.click_teacherSYSLink(driver);// 点击“教务工作台”
 		windows.changeWindow(driver);// 窗口切换到教务工作台
 		tIndex_page = PageFactory.initElements(driver, TIndex_page.class);
 		tIndex_page.click_courseAtLast();// 点击最后一个技能班
+		//进入最后一个班期，第一个阶段的课时管理页面
 		tIndex_page.click_firstSchedule();// 点击第一个班期（列表最后）
 		tIndex_page.click_classLink();// 第一个阶段的课时管理链接
+	}
+
+	@Test(description = "导入课时列表",dependsOnMethods="loginEDU",groups="firstStageClassManager")
+	public void inputClassList() throws IOException, InterruptedException {
 		class_page = PageFactory.initElements(driver, TClass_page.class);
 		String firePath = bdata.getFilePath("testFile/classList.xlsx");
 		class_page.sendkeys_inputFile(firePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
@@ -75,7 +76,7 @@ public class TClassManagerTest {
 			String periodCount = (mConn
 					.getData("SELECT COUNT(*) as periodCount from period_reading where period_id="+classList.get(i), "periodCount"))
 							.get(0);
-			System.out.println(classList.get(i));
+			//System.out.println(classList.get(i));
 			assertEquals(periodCount, "1");
 		}
 	}
@@ -127,7 +128,7 @@ public class TClassManagerTest {
 	public void secondStageClassManager() throws IOException, InterruptedException {
 		tIndex_page.click_firstSchedule();// 点击面包屑导航：班期
 		tIndex_page.click_secondClassLink();//第二个阶段的课时管理链接
-		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前阶段ID
+		//this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前阶段ID
 		this.inputClassList();//导入课时列表
 		this.readMassageEdit();//阅读课内容编辑
 		this.liveMassageEdit();//直播课内容

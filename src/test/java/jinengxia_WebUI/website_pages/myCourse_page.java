@@ -74,7 +74,7 @@ public class myCourse_page extends BasePage{
 		this.sendkeys(taskFile, s);
 	}
 	
-	@FindBy(xpath=".//*[@id='app']/div[2]/div[2]/div[3]/div/div[1]/h2/a")
+	@FindBy(xpath=".//*[@id='app']/div[2]/div[2]/div[4]/div/div[1]/h2/a")
 	private WebElement submitBTN;//打开作业提交的：提交作业按钮
 	public void click_submitBTN() {
 		this.click(submitBTN);
@@ -89,7 +89,7 @@ public class myCourse_page extends BasePage{
 		this.click(submitTaskBTN);
 	}
 
-	@FindBy(xpath=".//*[@id='app']/div[2]/div[2]/div[3]/div/div[3]/div/ul/li/div[1]/span[2]")
+	@FindBy(xpath=".//*[@id='app']/div[2]/div[2]/div[4]/div/div[3]/div/ul/li/div[1]/span[2]")
 	private WebElement taskType;//作业状态
 	public String get_taskType() {
 		return this.findMyElement(taskType).getText();

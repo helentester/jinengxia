@@ -115,11 +115,11 @@ public class BCourseManagerTest {
 		}
 		String courseId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前技能班id
 		String ScheduleCount = mConn.getData("SELECT COUNT(*)as ScheduleCount FROM course_schedule WHERE course_id="+courseId, "ScheduleCount").get(0);
-		assertTrue(Integer.parseInt(ScheduleCount)>=2);//判断是否有两个班期
+		assertEquals(ScheduleCount, "2");//判断是否有两个班期
 
 		//阶段管理和编辑页面，添加两个阶段
 		courseManager_page.click_stageLink();//点击“阶段管理”链接
-		for(int i=0;i<2;i++) {//为两个查询添加阶段
+		for(int i=0;i<2;i++) {//为两个班期添加阶段
 			//阶段列表页面
 			courseManager_page.select_scheduleAtStageList(i);//班期关键词
 			courseManager_page.click_searchBTN();//查询按钮
@@ -129,9 +129,8 @@ public class BCourseManagerTest {
 			}
 			String ScheduleId=bdata.getTargetList(driver.getCurrentUrl(), "(\\d+)(\\d+)").get(1);//从URL中获取当前班期的ID
 			String stageCount = mConn.getData("SELECT COUNT(*)as stageCount FROM course_stage WHERE course_schedule_id="+ScheduleId, "stageCount").get(0);
-			assertTrue(Integer.parseInt(stageCount)==2);//判断是否有两个阶段
+			assertEquals(stageCount, "2");//判断是否有两个阶段
 		}
-		
 	}
 	
 	@Test(description="给技能班添加学员",dependsOnMethods="addCourse")

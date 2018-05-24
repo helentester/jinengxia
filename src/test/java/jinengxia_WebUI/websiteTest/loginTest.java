@@ -9,7 +9,6 @@ import jinengxia_WebUI.website_pages.login_page;
 import static org.testng.Assert.assertTrue;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.PageFactory;
 
 public class loginTest {
