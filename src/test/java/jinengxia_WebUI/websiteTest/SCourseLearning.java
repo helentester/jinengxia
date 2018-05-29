@@ -87,7 +87,6 @@ public class SCourseLearning {
 			course_page.sendkeys_taskFile(baseData.getFilePath("testFile/env.tar"));
 			course_page.sendkeys_taskFile(baseData.getFilePath("testFile/interface_demo.zip"));
 			course_page.click_submitTaskBTN();//提交作业
-			//assertEquals(false, course_page.get_submitBTN());//判断提交按钮此时应当是不可点击的
 			assertEquals("待批改", course_page.get_taskType());
 			driver.quit();
 		}
@@ -97,17 +96,17 @@ public class SCourseLearning {
 	@Test(description="老师批改作业",dependsOnMethods="submitTaskByList")
 	public void correctTask() {
 		driver = loginTest.get_driver("helen_student01", "123456");
+		index_page = PageFactory.initElements(driver, index_page.class);//前台首页
 		index_page.click_teacherSYSLink(driver);// 点击“教务工作台”
 		windows.changeWindow(driver);// 窗口切换到教务工作台
 		tIndex_page = PageFactory.initElements(driver, TIndex_page.class);
 		tIndex_page.click_courseAtLast();// 点击最后一个技能班
 		tIndex_page.click_firstSchedule();// 点击第一个班期（列表最后）
-		course_id = baseData.getTargetList(driver.getCurrentUrl(), "//d+").get(0);//课程ID
-		period_id=mConn.getData("SELECT id from course_stage where course_id="+course_id+" and start_time< UNIX_TIMESTAMP(NOW()) and end_time>UNIX_TIMESTAMP(NOW())", "id").get(0);//课时ID
-		List<String> userTaskID = mConn.getData("SELECT id from user_period_task where period_id="+period_id+" and `status` in(2,3) ORDER BY id DESC LIMIT 1;", "id");//学员作业ID
-		//System.out.println(userTaskID);
+		schedule_id = baseData.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//班期ID
+		List<String> userTaskID = mConn.getData("SELECT id from user_period_task where period_id in(SELECT id from stage_period WHERE schedule_id="+schedule_id+" and type=3)  and `status` in(2,3);", "id");//学员作业ID
 		//直接进入批改作业页面，批改作业
 		for (int i = 0; i < userTaskID.size(); i++) {
+			period_id=mConn.getData("SELECT period_id from user_period_task WHERE id="+userTaskID.get(i), "period_id").get(0);
 			driver.get("https://dev.jinengxia.com/edu/period/task-view?id="+userTaskID.get(i)+"&period_id="+period_id);
 			driver.navigate().refresh();
 			correctTask_page = PageFactory.initElements(driver, TCorrectTask_page.class);//批改作业页面

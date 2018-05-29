@@ -55,8 +55,8 @@ public class TClassManagerTest {
 	@Test(description = "导入课时列表",dependsOnMethods="loginEDU",groups="firstStageClassManager")
 	public void inputClassList() throws IOException, InterruptedException {
 		class_page = PageFactory.initElements(driver, TClass_page.class);
-		String firePath = bdata.getFilePath("testFile/classList.xlsx");
-		class_page.sendkeys_inputFile(firePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
+		String filePath = bdata.getFilePath("testFile/classList.xlsx");
+		class_page.sendkeys_inputFile(filePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
 		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前阶段ID
 		Thread.sleep(2000);
 		String periodCount = mConn
@@ -126,6 +126,7 @@ public class TClassManagerTest {
 	
 	@Test(description="第二个阶段的所有课时操作",dependsOnGroups="firstStageClassManager")
 	public void secondStageClassManager() throws IOException, InterruptedException {
+		tIndex_page = PageFactory.initElements(driver, TIndex_page.class);
 		tIndex_page.click_firstSchedule();// 点击面包屑导航：班期
 		tIndex_page.click_secondClassLink();//第二个阶段的课时管理链接
 		//this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前阶段ID
@@ -138,6 +139,7 @@ public class TClassManagerTest {
 	
 	@Test(description="第二个班期，一键复制课时",dependsOnMethods="secondStageClassManager")
 	public void secondScheduleManager() throws InterruptedException {
+		tIndex_page = PageFactory.initElements(driver, TIndex_page.class);
 		tIndex_page.click_secondSchedule();//点击第二个班期
 		tIndex_page.click_classLink();//第一个课时管理链接
 		class_page.click_copyClassBTN();//一键复制按钮

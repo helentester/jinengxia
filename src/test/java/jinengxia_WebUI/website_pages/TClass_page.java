@@ -31,8 +31,8 @@ public class TClass_page extends BasePage{
 	public void click_copyBTN() {
 		this.click(copyBTN);
 	}
-					
-	@FindBy(xpath=".//*[@id='app']/div[1]/section/h2/div/div[2]/input")
+
+	@FindBy(xpath=".//*[@id='import-curriculum']/div[2]/input")
 	private WebElement inputFile;//导入文件的输入框（课时导入和内容管理中的导入都用同样的对象）
 	public void sendkeys_inputFile(String s) {
 		this.sendkeys(inputFile, s);//输入导入文件的路径

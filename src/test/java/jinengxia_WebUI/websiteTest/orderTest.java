@@ -5,7 +5,6 @@
 package jinengxia_WebUI.websiteTest;
 
 import static org.testng.Assert.assertEquals;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.Test;
@@ -24,6 +23,7 @@ import jinengxia_WebUI.website_pages.orderPay_page;
 public class orderTest {
 	loginTest loginTest = new loginTest();
 	WebDriver driver;
+	BaseWindows myWindows = new BaseWindows();
 
 	@Test(description="官网下订单操作")
 	public void buy_aplipay() {
