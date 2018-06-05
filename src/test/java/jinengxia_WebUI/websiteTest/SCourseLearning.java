@@ -6,6 +6,8 @@ package jinengxia_WebUI.websiteTest;
 
 import org.testng.annotations.Test;
 
+import net.sf.json.JSONObject;
+
 import common.BaseData;
 import common.BaseWindows;
 import common.mysql_conn;
@@ -20,6 +22,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.HttpResponse;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.util.EntityUtils;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.testng.annotations.AfterClass;
@@ -27,13 +35,15 @@ import org.testng.annotations.AfterClass;
 /**
  * 描述：技能班提交作业和批改作业
  */
-@Test(groups="SCourseLearning",description="学员提交作业，老师批改作业",dependsOnGroups="TClassManagerTest")
+@Test(groups="SCourseLearning",description="学员提交作业，老师批改作业")//,dependsOnGroups="TClassManagerTest")
 public class SCourseLearning {
 	loginTest loginTest = new loginTest();
 	mysql_conn mConn = new mysql_conn();
 	BaseData baseData = new BaseData();
 	BaseWindows windows = new BaseWindows();
 	WebDriver driver;
+	HttpResponse httpResponse;
+	CloseableHttpClient httpClient = HttpClients.createDefault();
 	index_page index_page;//前台首页
 	myCourse_page course_page;//技能班学习面
 	TIndex_page tIndex_page;//教务工作台首页
@@ -45,10 +55,10 @@ public class SCourseLearning {
 	
 	@AfterClass
 	public void driverQuit() {
-		driver.quit();
+		//driver.quit();
 	}
 	
-	@Test(description="多个学员提交作业")
+	@Test(description="多个学员提交作业",enabled=false)
 	public void submitTaskByList() throws IOException {
 		List<String> studentList=new ArrayList<String>();
 		studentList.add("du001");
@@ -93,7 +103,7 @@ public class SCourseLearning {
 		
 	}
 	
-	@Test(description="老师批改作业",dependsOnMethods="submitTaskByList")
+	@Test(description="老师批改作业",dependsOnMethods="submitTaskByList",enabled=false)
 	public void correctTask() {
 		driver = loginTest.get_driver("helen_student01", "123456");
 		index_page = PageFactory.initElements(driver, index_page.class);//前台首页
@@ -155,6 +165,19 @@ public class SCourseLearning {
 		driver.quit();
 	}
 	
-
+	@Test(description="生成小组排名和个人学分排名",dependsOnMethods="correctTask",enabled=false)
+	public void api_staticCredit() throws ClientProtocolException, IOException {
+		HttpGet httpGet = new HttpGet("http://api.dev.jinengxia.com/test/static-credit");
+		httpResponse = httpClient.execute(httpGet);
+		String srtResult = EntityUtils.toString(httpResponse.getEntity());// 获得返回的结果
+		assertEquals(httpResponse.getStatusLine().getStatusCode(), 200);//检查接口返回状态码
+		JSONObject jsonObject = JSONObject.fromObject(srtResult);//把结果转为json
+		assertEquals(jsonObject.getString("error"), "0");
+	}
+	
+	@Test(description="检查个人排名")
+	public void api_PersonRanking() {
+		
+	}
 
 }
