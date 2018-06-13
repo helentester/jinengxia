@@ -16,6 +16,6 @@ public class myApiTestData {
 
 	@DataProvider(name = "loginData")
 	public Object[][] getLoginData() throws IOException {
-		return myExcel.readExcel("src/test/java/testFile/TestData.xlsx","login");
+		return myExcel.readExcel("login");
 	}
 }

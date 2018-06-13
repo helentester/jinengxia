@@ -10,28 +10,30 @@ import java.io.IOException;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;  
-import org.apache.poi.xssf.usermodel.XSSFWorkbook; 
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import config.MyConfig; 
 
 /**
  * 描述：excel事件处理
  */
 public class MyExcel {
-
+	MyConfig myConfig= new MyConfig();
 	/**
 	 * @param args
 	 * @throws IOException 
 	 */
 	public static void main(String[] args) throws IOException  {
 		MyExcel myExcel = new MyExcel();
-		myExcel.readExcel("src/test/java/testFile/TestData.xlsx","login");
+		myExcel.readExcel("login");
 	}
 	
 	/*读取excel文件中的数据，并生成数组*/
 	@SuppressWarnings("deprecation")
-	public Object[][] readExcel(String filePath,String sheetName) throws IOException {
+	public Object[][] readExcel(String sheetName) throws IOException {
 		BaseData bdata = new BaseData();
 		
-		File file = new File(bdata.getFilePath(filePath));//获取文件
+		File file = new File(bdata.getFilePath(myConfig.getPropertyValue("testDataFilePath")));//获取文件
 		FileInputStream fileInputStream = new FileInputStream(file);//读数据
 		
 		XSSFWorkbook workbook = new XSSFWorkbook(fileInputStream);

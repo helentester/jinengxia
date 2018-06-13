@@ -81,7 +81,7 @@
 			<version>2.4</version>
 			<classifier>jdk15</classifier>
 		</dependency>
-		<!--加入对excel的读写支持-->
+		<!--加入对excel的读写支持 -->
 		<!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
 		<dependency>
 			<groupId>org.apache.poi</groupId>
@@ -92,6 +92,7 @@
 	</dependencies>
 
 	<build>
+
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -101,7 +102,7 @@
 						<!-- 主要业务流测试 -->
 						<suiteXmlFile>src/test/java/testNGFiles/myTestNG.xml</suiteXmlFile>
 						<!-- 普通功能单元测试 -->
-						<!--<suiteXmlFile>src/test/java/testNGFiles/UnitCaseTestNG.xml</suiteXmlFile> -->
+						<suiteXmlFile>src/test/java/testNGFiles/UnitCaseTestNG.xml</suiteXmlFile>
 					</suiteXmlFiles>
 					<argLine>-Dfile.encoding=UTF-8</argLine>
 					<workingDirectory>target/</workingDirectory>

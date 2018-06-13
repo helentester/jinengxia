@@ -20,9 +20,11 @@
 	</test>-->
 	<test name="单个调试">
 	<classes>
-	   <!--  <class name="jinengxia_WebUI.backendTest.BCourseManagerTest"></class> -->
+	
+		<class name="jinengxia_apiTest.UserAuthorization"/>
+	     <!--<class name="jinengxia_WebUI.backendTest.BCourseManagerTest"></class>
 		<class name="jinengxia_WebUI.websiteTest.TClassManagerTest"></class>
-		<!--  <class name="jinengxia_WebUI.websiteTest.TStudentTeamManagerTest"></class>
+		  <class name="jinengxia_WebUI.websiteTest.TStudentTeamManagerTest"></class>
 		<class name="jinengxia_WebUI.websiteTest.SCourseLearning"></class>
 		<class name="jinengxia_WebUI.websiteTest.orderTest"></class>-->
 	</classes>

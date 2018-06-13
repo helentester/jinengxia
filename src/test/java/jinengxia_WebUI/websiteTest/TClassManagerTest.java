@@ -8,6 +8,7 @@ import org.testng.annotations.Test;
 import common.BaseData;
 import common.BaseWindows;
 import common.mysql_conn;
+import config.MyConfig;
 import jinengxia_WebUI.website_pages.TClass_page;
 import jinengxia_WebUI.website_pages.TIndex_page;
 import jinengxia_WebUI.website_pages.index_page;
@@ -22,13 +23,14 @@ import org.testng.annotations.AfterClass;
 /**
  * 描述：教务工作台－课时管理：设置整个学习阶段的阅读课、录播课、作业、直播课
  */
-@Test(groups="TClassManagerTest",dependsOnGroups="BCourseManagerTest")
+@Test(groups="TClassManagerTest")//,dependsOnGroups="BCourseManagerTest")
 public class TClassManagerTest {
 	loginTest loginTest = new loginTest();
 	WebDriver driver;
 	BaseData bdata = new BaseData();
 	mysql_conn mConn = new mysql_conn();
 	BaseWindows windows = new BaseWindows();
+	MyConfig myConfig = new MyConfig();
 	index_page index_page;
 	TIndex_page tIndex_page;
 	TClass_page class_page;
@@ -55,7 +57,7 @@ public class TClassManagerTest {
 	@Test(description = "导入课时列表",dependsOnMethods="loginEDU",groups="firstStageClassManager")
 	public void inputClassList() throws IOException, InterruptedException {
 		class_page = PageFactory.initElements(driver, TClass_page.class);
-		String filePath = bdata.getFilePath("testFile/classList.xlsx");
+		String filePath = bdata.getFilePath(myConfig.getPropertyValue("classList"));
 		class_page.sendkeys_inputFile(filePath);// 不知何故，这里不能用相对路径，必须用绝对路径，所以要转换一下取得绝对路径才能上传上功
 		this.stageId = bdata.getTargetList(driver.getCurrentUrl(), "\\d+").get(0);//获取当前阶段ID
 		Thread.sleep(2000);
@@ -159,8 +161,8 @@ public class TClassManagerTest {
 		class_page.click_editBTN();// 内容管理按钮
 		class_page = PageFactory.initElements(driver, TClass_page.class);
 		class_page.sendkeys_editor(driver, massageTile+classID);// 输入内容
-		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/测试用导入.rar"));// 导入rar文件
-		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/env.tar"));// 导入tar文件
-		class_page.sendkeys_inputMassageFile(bdata.getFilePath("testFile/interface_demo.zip"));// 导入zip文件
+		class_page.sendkeys_inputMassageFile(bdata.getFilePath(myConfig.getPropertyValue("uploadfile_rar")));// 导入rar文件
+		class_page.sendkeys_inputMassageFile(bdata.getFilePath(myConfig.getPropertyValue("uploadfile_tar")));// 导入tar文件
+		class_page.sendkeys_inputMassageFile(bdata.getFilePath(myConfig.getPropertyValue("uploadfile_zip")));// 导入zip文件
 	}
 }
